@@ -10,7 +10,26 @@ const compat = new FlatCompat({
 });
 
 const eslintConfig = [
-  ...compat.extends("next/core-web-vitals", "next/typescript"),
+  ...compat.extends("next/core-web-vitals", "next/typescript", "prettier"),
+    {
+    files: ["**/*.{ts,tsx}"],
+    rules: {
+      "no-console": ["warn", { allow: ["warn", "error"] }],
+      "no-debugger": "error",
+      "no-unused-vars": ["warn", { argsIgnorePattern: "^_", varsIgnorePattern: "^_" }],
+      "@typescript-eslint/no-unused-vars": ["warn", { argsIgnorePattern: "^_", varsIgnorePattern: "^_" }],
+
+      "react/jsx-key": "warn",
+      "react/self-closing-comp": ["warn", { component: true, html: true }],
+
+      "@typescript-eslint/consistent-type-imports": "warn",
+      "@typescript-eslint/prefer-ts-expect-error": "warn",
+
+      "semi": ["error", "always"],
+      "comma-dangle": ["error", "only-multiline"],
+      "object-curly-spacing": ["error", "always"],
+    },
+  },
 ];
 
 export default eslintConfig;
