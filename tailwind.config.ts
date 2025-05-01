@@ -1,8 +1,14 @@
-import type { Config } from 'tailwindcss';
-import { COLORS } from './src/shared/constants/colors.constants';
+import { COLORS } from './src/shared/model/constants/colors.constants'
+import type { Config } from 'tailwindcss'
 
 const config: Config = {
-	content: ['./src/components/**/*.{js,ts,jsx,tsx,mdx}', './src/app/**/*.{js,ts,jsx,tsx,mdx}'],
+	content: [
+		'./src/app/**/*.{js,ts,jsx,tsx}',
+		'./src/widgets/**/*.{js,ts,jsx,tsx}',
+		'./src/features/**/*.{js,ts,jsx,tsx}',
+		'./src/entities/**/*.{js,ts,jsx,tsx}',
+		'./src/shared/**/*.{js,ts,jsx,tsx}'
+	],
 	theme: {
 		extend: {
 			colors: COLORS,
@@ -18,6 +24,6 @@ const config: Config = {
 		}
 	},
 	plugins: []
-};
+}
 
-export default config;
+export default config

@@ -1,28 +1,28 @@
-import type { Metadata } from "next";
-import { Roboto } from "next/font/google";
-import React from 'react';
+import './globals.scss'
+import Providers from '@/app/Providers'
+import type { Metadata } from 'next'
+import { Roboto } from 'next/font/google'
+import React from 'react'
 
 const roboto = Roboto({
-  subsets: ["latin", "cyrillic"],
-});
+	subsets: ['latin', 'cyrillic']
+})
 
 export const metadata: Metadata = {
-  title: "Productivity App",
-  description: "Kanban + Pomodoro + Todo in one",
-};
+	title: 'Productivity App',
+	description: 'Simplified Trello | Kanban'
+}
 
 export default function RootLayout({
-  children,
+	children
 }: Readonly<{
-  children: React.ReactNode;
+	children: React.ReactNode
 }>) {
-  return (
-    <html lang="en">
-      <body
-        className={`${roboto.className} antialiased`}
-      >
-        {children}
-      </body>
-    </html>
-  );
+	return (
+		<html lang='en'>
+			<body className={`${roboto.className} antialiased`}>
+				<Providers>{children}</Providers>
+			</body>
+		</html>
+	)
 }

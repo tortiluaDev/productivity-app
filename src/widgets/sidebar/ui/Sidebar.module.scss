@@ -1,0 +1,42 @@
+.sidebar {
+  @apply h-full transition-all duration-300 flex flex-col bg-dark;
+}
+
+.openSidebar {
+  @apply w-[clamp(16rem,20vw,20rem)] px-8 gap-8 relative;
+
+  .hideSidebarButton {
+    @apply absolute right-6 top-[50px];
+  }
+
+  .sidebarItem {
+    @apply flex gap-5 items-center text-white max-w-[80%];
+    span {
+      @apply text-xl;
+    }
+  }
+
+  .sidebarItem:nth-of-type(1) {
+  @apply pt-12;
+  }
+
+  .menu {
+    h2 {
+      @apply pb-2;
+    }
+    p {
+      @apply pb-1;
+    }
+    button {
+      @apply flex items-center justify-between w-full;
+    }
+  }
+}
+
+.hiddenSidebar {
+  @apply w-10 relative;
+
+  .openSidebarButton {
+    @apply absolute -right-3 top-12;
+  }
+}
