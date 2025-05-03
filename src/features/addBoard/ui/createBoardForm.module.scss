@@ -1,0 +1,28 @@
+.form {
+  @apply flex flex-col gap-3 text-white border-2 border-dark rounded-xl p-4;
+
+  input {
+    @apply bg-dark px-2 py-1.5 rounded-2xl w-full mr-3;
+  }
+  input:focus {
+    @apply outline-none;
+  }
+
+  > div {
+    @apply flex items-center justify-between;
+
+    button {
+      @apply text-dark transition;
+    }
+    button:hover {
+    @apply text-white;
+  }
+  }
+
+  > button {
+    @apply bg-accent rounded-2xl px-1.5 py-1 text-lg transition;
+  }
+  > button:hover {
+    @apply opacity-70;
+  }
+}
