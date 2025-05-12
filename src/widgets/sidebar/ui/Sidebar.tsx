@@ -26,7 +26,7 @@ export function Sidebar() {
 							menuItem={item}
 						/>
 					))}
-					<MyBoardsMenu className={styles.menu} />
+					<MyBoardsMenu />
 				</>
 			)}
 		</aside>

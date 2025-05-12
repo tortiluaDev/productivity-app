@@ -24,11 +24,17 @@
     h2 {
       @apply pb-2;
     }
-    p {
-      @apply pb-1;
+
+    .menuItem {
+      @apply pb-1 w-full flex items-center gap-1 opacity-100 transition;
+
+      img {
+        @apply w-7 h-5 rounded-sm;
+      }
     }
-    button {
-      @apply flex items-center justify-between w-full;
+
+    .btn {
+      @apply flex items-center justify-between w-full pt-2;
     }
   }
 }

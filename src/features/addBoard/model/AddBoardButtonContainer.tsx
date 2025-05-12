@@ -1,9 +1,27 @@
 import { useMyBoardsStore } from '@/entities/board'
 import { AddBoardButton } from '@/features/addBoard/ui/AddBoardButton'
 import { AddBoardForm } from '@/features/addBoard/ui/AddBoardForm'
-import React, { useState } from 'react'
+import type { TImage } from '@/shared/api'
+import { imagesService } from '@/shared/api'
+import { useQuery } from '@tanstack/react-query'
+import React, { useEffect, useState } from 'react'
 
 export function AddBoardButtonContainer() {
+	const {
+		data = [],
+		isError,
+		isPending
+	} = useQuery({
+		queryKey: ['boardDefaultImg'],
+		queryFn: () => imagesService.getBaseImages(),
+		staleTime: 1000 * 60 * 10
+	})
+	const [selectedImg, setSelectedImg] = useState<TImage>(data[0])
+
+	useEffect(() => {
+		if (data && data.length > 0) setSelectedImg(data[0])
+	}, [data])
+
 	const [isOpenCreateBoardModal, setIsOpenCreateBoardModal] = useState(false)
 	const [boardName, setBoardName] = useState('')
 
@@ -15,7 +33,8 @@ export function AddBoardButtonContainer() {
 
 	const handleSubmitForm = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault()
-		addBoard(boardName)
+		const selectedBg: TImage = data.filter(img => img.id === selectedImg?.id)[0]
+		addBoard(boardName, selectedBg.webformatURL, selectedBg.previewURL)
 		setBoardName('')
 		setIsOpenCreateBoardModal(false)
 	}
@@ -27,6 +46,11 @@ export function AddBoardButtonContainer() {
 				setIsOpenCreateBoardModal={setIsOpenCreateBoardModal}
 				boardName={boardName}
 				setBoardName={setBoardName}
+				data={data}
+				isPending={isPending}
+				isError={isError}
+				selectedImg={selectedImg}
+				setSelectedImg={setSelectedImg}
 			/>
 		)
 

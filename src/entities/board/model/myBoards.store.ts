@@ -8,7 +8,7 @@ export const useMyBoardsStore = create<IStore>()(
 	persist(
 		set => ({
 			boards: [],
-			addBoard: text =>
+			addBoard: (text, img, blurImg) =>
 				set(state => {
 					const slug = createSlug(text)
 					let uniqueSlug = slug
@@ -24,7 +24,9 @@ export const useMyBoardsStore = create<IStore>()(
 							{
 								id: uuid(),
 								name: text,
-								slug: uniqueSlug
+								slug: uniqueSlug,
+								img,
+								blurImg
 							}
 						]
 					}
