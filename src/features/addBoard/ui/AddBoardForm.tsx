@@ -1,35 +1,26 @@
 import styles from './createBoardForm.module.scss'
+import { IProps } from '@/features/addBoard/model/AddBoardForm.types'
+import { ImagePicker } from '@/features/addBoard/ui/ImagePicker'
 import type { TImage } from '@/shared/api'
+import { ShowMoreAndHideButton } from '@/shared/ui'
 import { ImageWithSkeleton } from '@/shared/ui/skeletons/ImageWithSkeleton'
 import { CircleX } from 'lucide-react'
 import React, { useEffect, useState } from 'react'
 
-interface IProps {
-	handleSubmitForm: (e: React.FormEvent<HTMLFormElement>) => void
-	setBoardName: (text: string) => void
-	boardName: string
-	setIsOpenCreateBoardModal: (isOpen: boolean) => void
-	data: TImage[] | []
-	isPending: boolean
-	isError: boolean
-	selectedImg: TImage
-	setSelectedImg: (newImg: TImage) => void
-}
+export function AddBoardForm(props: IProps) {
+	const {
+		handleSubmitForm,
+		setBoardName,
+		boardName,
+		setIsOpenCreateBoardModal,
+		data,
+		isError,
+		selectedImg,
+		setSelectedImg
+	} = props
 
-export function AddBoardForm({
-	handleSubmitForm,
-	setBoardName,
-	boardName,
-	setIsOpenCreateBoardModal,
-	data,
-	isPending,
-	isError,
-	selectedImg,
-	setSelectedImg
-}: IProps) {
-	// ДОДЕЛАТЬ
-	// + ОБЩИЙ РЕФАКТОРИНГ!
 	const [selectedBg, setSelectedBg] = useState<TImage | null>(null)
+	const [isShowMore, setIsShowMore] = useState(false)
 
 	useEffect(() => {
 		if (data && selectedImg.id > -1) {
@@ -50,7 +41,7 @@ export function AddBoardForm({
 					type='button'
 					onClick={() => setIsOpenCreateBoardModal(false)}
 				>
-					<CircleX />
+					<CircleX aria-label={'close board redactor form'} />
 				</button>
 			</div>
 			{!isError && (
@@ -59,27 +50,19 @@ export function AddBoardForm({
 						className={styles.pickedImg}
 						src={selectedBg?.webformatURL || ''}
 						alt={data[0].tags.split(', ')[0]}
-						width={'100%'}
-						height={'30%'}
 						blurSrc={selectedBg?.previewURL || ''}
 					/>
-					<div className={styles.images}>
-						{isPending ? (
-							<div>Pending...</div>
-						) : (
-							data.map(img => (
-								<ImageWithSkeleton
-									src={img.webformatURL}
-									alt={img.tags.split(', ')[0]}
-									key={img.id}
-									width={'100%'}
-									height={'100%'}
-									onClick={() => setSelectedImg(img)}
-									className='w-full h-full object-cover rounded-sm'
-								/>
-							))
-						)}
-					</div>
+					<ImagePicker
+						data={data}
+						setSelectedImg={setSelectedImg}
+						imagesCount={isShowMore ? 20 : 4}
+					/>
+					<ShowMoreAndHideButton
+						onToggle={() => setIsShowMore(prev => !prev)}
+						isShowMore={isShowMore}
+						className={styles.btn}
+						hiddenCount={data.length - data.slice(0, 4).length}
+					/>
 				</>
 			)}
 			<input
@@ -90,7 +73,7 @@ export function AddBoardForm({
 			/>
 			<button
 				type='submit'
-				disabled={boardName.length < 1}
+				disabled={!boardName.trim()}
 			>
 				Create
 			</button>

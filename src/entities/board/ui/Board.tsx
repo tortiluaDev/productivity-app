@@ -9,14 +9,12 @@ interface IProps {
 
 export function Board({ title, slug, img, blurImg }: IProps) {
 	return (
-		<button className='opacity-85 min-h-28 max-h-32 text-left rounded-xl relative'>
+		<button className='opacity-85 text-left rounded-xl relative h-40'>
 			<ImageWithSkeleton
-				className='w-full h-full rounded-xl'
+				className='rounded-xl h-40'
 				src={img}
 				blurSrc={blurImg}
 				alt={slug}
-				width='100%'
-				height='100%'
 			/>
 			<p className='text-white font-bold break-words text-2xl absolute top-2 left-1.5'>{title}</p>
 		</button>

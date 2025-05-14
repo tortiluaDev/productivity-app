@@ -19,7 +19,7 @@ export const ImageWithSkeleton = React.memo(function ({ width, height, ...props 
 					loading={'lazy'}
 					role={'presentation'}
 					className={clsx(
-						'absolute inset-0 rounded-sm object-cover blur-xl scale-105 transition-opacity duration-700',
+						'object-cover block h-full w-full absolute inset-0 rounded-sm blur-xl scale-105 transition-opacity duration-700',
 						loaded ? 'opacity-0' : 'opacity-100'
 					)}
 				/>
@@ -33,7 +33,7 @@ export const ImageWithSkeleton = React.memo(function ({ width, height, ...props 
 					onClick={props.onClick}
 					loading={'lazy'}
 					className={clsx(
-						'object-cover rounded-sm transition-opacity duration-500',
+						'object-cover block h-full w-full rounded-sm transition-opacity duration-500',
 						loaded ? 'opacity-100' : 'opacity-0',
 						props.onClick ? 'cursor-pointer' : ''
 					)}

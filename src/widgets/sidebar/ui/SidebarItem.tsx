@@ -1,4 +1,4 @@
-import type { IMenu_Data } from '@/entities/sidebarItem'
+import type { IMenu_Data } from '../model/sidebar.data'
 import clsx from 'clsx'
 import Link from 'next/link'
 

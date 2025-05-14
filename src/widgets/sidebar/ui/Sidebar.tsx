@@ -1,7 +1,8 @@
 'use client'
 
 import styles from './Sidebar.module.scss'
-import { MENU_DATA, SidebarItem } from '@/entities/sidebarItem'
+import { SidebarItem } from './SidebarItem'
+import { MENU_DATA } from '@/widgets/sidebar/model/sidebar.data'
 import { useSidebarState } from '@/widgets/sidebar/model/useSidebarState'
 import MyBoardsMenu from '@/widgets/sidebar/ui/MyBoardsMenu'
 import { SidebarToggleButton } from '@/widgets/sidebar/ui/SidebarToggleButton'

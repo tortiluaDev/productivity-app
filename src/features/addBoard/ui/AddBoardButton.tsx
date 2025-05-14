@@ -8,6 +8,7 @@ export function AddBoardButton({ handleClick }: { handleClick: () => void }) {
 		>
 			<CirclePlus
 				size={26}
+				aria-label={'add board'}
 				className='opacity-70 group-hover:opacity-100 transition duration-75'
 			/>
 			<p className='font-bold break-words pt-1 opacity-70 group-hover:opacity-100 transition duration-75'>

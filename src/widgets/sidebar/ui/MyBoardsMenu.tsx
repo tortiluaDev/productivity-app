@@ -1,8 +1,9 @@
 import styles from './Sidebar.module.scss'
 import { useMyBoardsStore } from '@/entities/board'
+import { ShowMoreAndHideButton } from '@/shared/ui'
+import { ImageWithSkeleton } from '@/shared/ui/skeletons/ImageWithSkeleton'
 import clsx from 'clsx'
 import { AnimatePresence, motion } from 'framer-motion'
-import { ChevronDown, ChevronUp } from 'lucide-react'
 import React, { useState } from 'react'
 
 function MyBoardsMenu() {
@@ -18,9 +19,10 @@ function MyBoardsMenu() {
 					key={board.id}
 					className={clsx('group', styles.menuItem)}
 				>
-					<img
-						src={board.img}
+					<ImageWithSkeleton
+						src={board.blurImg ?? board.img}
 						alt={board.slug}
+						blurSrc={board.blurImg}
 					/>
 					<p className='group-hover:text-accent'>{board.name}</p>
 				</button>
@@ -39,7 +41,7 @@ function MyBoardsMenu() {
 								className={clsx('group', styles.menuItem)}
 							>
 								<img
-									src={board.img}
+									src={board.blurImg ?? board.img}
 									alt={board.slug}
 								/>
 								<p className='group-hover:text-accent'>{board.name}</p>
@@ -49,14 +51,12 @@ function MyBoardsMenu() {
 				)}
 			</AnimatePresence>
 			{boards.length > 2 && (
-				<button
-					onClick={() => setIsShowMore(prev => !prev)}
+				<ShowMoreAndHideButton
+					onToggle={() => setIsShowMore(prev => !prev)}
+					isShowMore={isShowMore}
 					className={styles.btn}
-				>
-					{isShowMore ? <ChevronUp /> : <ChevronDown />}
-					<p>{isShowMore ? 'Hide' : 'Show more'}</p>
-					{!isShowMore && <p>{boards.length - boardsSlice.length}</p>}
-				</button>
+					hiddenCount={boards.length - boardsSlice.length}
+				/>
 			)}
 		</div>
 	)

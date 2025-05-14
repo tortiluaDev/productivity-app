@@ -7,11 +7,7 @@ import { useQuery } from '@tanstack/react-query'
 import React, { useEffect, useState } from 'react'
 
 export function AddBoardButtonContainer() {
-	const {
-		data = [],
-		isError,
-		isPending
-	} = useQuery({
+	const { data = [], isError } = useQuery({
 		queryKey: ['boardDefaultImg'],
 		queryFn: () => imagesService.getBaseImages(),
 		staleTime: 1000 * 60 * 10
@@ -47,7 +43,6 @@ export function AddBoardButtonContainer() {
 				boardName={boardName}
 				setBoardName={setBoardName}
 				data={data}
-				isPending={isPending}
 				isError={isError}
 				selectedImg={selectedImg}
 				setSelectedImg={setSelectedImg}
