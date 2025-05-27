@@ -10,7 +10,10 @@ interface IProps {
 export function SidebarToggleButton({ isOpenSidebar, toggleSidebarState }: IProps) {
 	return (
 		<button
-			className={clsx('group', isOpenSidebar ? styles.hideSidebarButton : styles.openSidebarButton)}
+			className={clsx(
+				'group z-50',
+				isOpenSidebar ? styles.hideSidebarButton : styles.openSidebarButton
+			)}
 			onClick={toggleSidebarState}
 		>
 			{isOpenSidebar ? (

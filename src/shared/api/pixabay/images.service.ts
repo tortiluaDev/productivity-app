@@ -29,31 +29,6 @@ class ImagesService {
 			return []
 		}
 	}
-
-	async getSearchImages(query: string): Promise<TImage[]> {
-		const url = `${this._BASE_URL}/?key=${this._API_KEY}&q=${query}&image_type=photo&orientation=horizontal`
-
-		try {
-			const response = await fetch(url)
-			if (!response.ok) {
-				console.error(`Pixabay response status: ${response.status}`)
-				return []
-			}
-
-			const json = await response.json()
-			const validatedData = PixabaySchema.safeParse(json)
-
-			if (!validatedData.success) {
-				console.error(validatedData.error)
-				return []
-			}
-
-			return validatedData.data.hits
-		} catch (e) {
-			console.error(`Pixabay fetch error: ${e}`)
-			return []
-		}
-	}
 }
 
 export const imagesService = new ImagesService()

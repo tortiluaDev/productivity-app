@@ -1,14 +1,19 @@
-interface IBoard {
+export interface IBoard {
 	id: string
 	name: string
 	slug: string
-	img: string
-	blurImg?: string
+	images: IImages
 }
 
 export interface IStore {
 	boards: IBoard[]
-	addBoard: (text: string, img: string, blurImg?: string) => void
+	addBoard: (text: string, images: IImages) => void
 	removeBoard: (id: string) => void
 	clearBoards: () => void
+}
+
+interface IImages {
+	img: string
+	blurImg?: string
+	enhancedImg?: string
 }

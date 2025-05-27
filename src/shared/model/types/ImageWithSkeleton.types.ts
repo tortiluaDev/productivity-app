@@ -8,4 +8,5 @@ export interface IProps {
 	className?: string
 	blurSrc?: string
 	onClick?: React.MouseEventHandler<HTMLImageElement>
+	isLazy?: boolean
 }

@@ -16,7 +16,6 @@ export const ImageWithSkeleton = React.memo(function ({ width, height, ...props 
 					src={props.blurSrc}
 					alt={props.alt}
 					aria-hidden
-					loading={'lazy'}
 					role={'presentation'}
 					className={clsx(
 						'object-cover block h-full w-full absolute inset-0 rounded-sm blur-xl scale-105 transition-opacity duration-700',
@@ -31,7 +30,7 @@ export const ImageWithSkeleton = React.memo(function ({ width, height, ...props 
 					alt={props.alt}
 					onLoad={() => setLoaded(true)}
 					onClick={props.onClick}
-					loading={'lazy'}
+					loading={props.isLazy ? 'lazy' : 'eager'}
 					className={clsx(
 						'object-cover block h-full w-full rounded-sm transition-opacity duration-500',
 						loaded ? 'opacity-100' : 'opacity-0',

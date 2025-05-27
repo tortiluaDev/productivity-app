@@ -5,7 +5,7 @@ function Layout({ children }: PropsWithChildren) {
 	return (
 		<div className='w-screen h-screen flex'>
 			<Sidebar />
-			<main className='h-full flex-1 bg-bg'>{children}</main>
+			<main className='h-full flex-1 overflow-x-auto w-full min-w-0 bg-bg'>{children}</main>
 		</div>
 	)
 }

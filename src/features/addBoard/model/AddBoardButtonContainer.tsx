@@ -30,7 +30,11 @@ export function AddBoardButtonContainer() {
 	const handleSubmitForm = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault()
 		const selectedBg: TImage = data.filter(img => img.id === selectedImg?.id)[0]
-		addBoard(boardName, selectedBg.webformatURL, selectedBg.previewURL)
+		addBoard(boardName, {
+			img: selectedBg.webformatURL,
+			blurImg: selectedBg.previewURL,
+			enhancedImg: selectedBg.largeImageURL
+		})
 		setBoardName('')
 		setIsOpenCreateBoardModal(false)
 	}

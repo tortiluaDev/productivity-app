@@ -8,13 +8,13 @@ export const useMyBoardsStore = create<IStore>()(
 	persist(
 		set => ({
 			boards: [],
-			addBoard: (text, img, blurImg) =>
+			addBoard: (text, images) =>
 				set(state => {
 					const slug = createSlug(text)
 					let uniqueSlug = slug
 					let count = 1
 
-					while (state.boards.some(board => board.id === uniqueSlug)) {
+					while (state.boards.some(board => board.slug === uniqueSlug)) {
 						uniqueSlug = `${slug}-${count++}`
 					}
 
@@ -25,8 +25,7 @@ export const useMyBoardsStore = create<IStore>()(
 								id: uuid(),
 								name: text,
 								slug: uniqueSlug,
-								img,
-								blurImg
+								images
 							}
 						]
 					}

@@ -4,9 +4,11 @@ import { ShowMoreAndHideButton } from '@/shared/ui'
 import { ImageWithSkeleton } from '@/shared/ui/skeletons/ImageWithSkeleton'
 import clsx from 'clsx'
 import { AnimatePresence, motion } from 'framer-motion'
+import { useRouter } from 'next/navigation'
 import React, { useState } from 'react'
 
 function MyBoardsMenu() {
+	const router = useRouter()
 	const boards = useMyBoardsStore(state => state.boards)
 	const boardsSlice = boards.slice(0, 2)
 	const [isShowMore, setIsShowMore] = useState(false)
@@ -18,11 +20,13 @@ function MyBoardsMenu() {
 				<button
 					key={board.id}
 					className={clsx('group', styles.menuItem)}
+					onClick={() => router.push(`/b/${board.slug}`)}
 				>
 					<ImageWithSkeleton
-						src={board.blurImg ?? board.img}
+						src={board.images.blurImg ?? board.images.img}
 						alt={board.slug}
-						blurSrc={board.blurImg}
+						blurSrc={board.images.blurImg}
+						isLazy={false}
 					/>
 					<p className='group-hover:text-accent'>{board.name}</p>
 				</button>
@@ -39,10 +43,13 @@ function MyBoardsMenu() {
 							<button
 								key={board.id}
 								className={clsx('group', styles.menuItem)}
+								onClick={() => router.push(`/b/${board.slug}`)}
 							>
-								<img
-									src={board.blurImg ?? board.img}
+								<ImageWithSkeleton
+									src={board.images.blurImg ?? board.images.img}
 									alt={board.slug}
+									blurSrc={board.images.blurImg}
+									isLazy={true}
 								/>
 								<p className='group-hover:text-accent'>{board.name}</p>
 							</button>

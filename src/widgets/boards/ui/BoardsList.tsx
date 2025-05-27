@@ -20,8 +20,8 @@ export function BoardsList() {
 						key={board.id}
 						title={board.name}
 						slug={board.slug}
-						img={board.img}
-						blurImg={board.blurImg}
+						img={board.images.img}
+						blurImg={board.images.blurImg}
 					/>
 				))}
 				<AddBoardButtonContainer />

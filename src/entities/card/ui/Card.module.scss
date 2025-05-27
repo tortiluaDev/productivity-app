@@ -1,0 +1,41 @@
+.card {
+  @apply flex items-center space-x-2 bg-dark px-2 py-3 rounded-md justify-between mb-4;
+
+  > span {
+    @apply select-none w-4/5
+  }
+
+   > label {
+    @apply relative w-5 h-5 cursor-pointer border-2 border-gray-400 rounded-full
+    transition duration-75 hover:border-accent items-start self-start flex-shrink-0;
+
+  .checkbox {
+    @apply appearance-none focus:outline-none;
+}
+  };
+
+  .iconsWrapper {
+    @apply flex gap-2 items-start self-start
+  }
+}
+
+.cardDefault {
+  @apply flex items-center bg-dark px-2 py-3 rounded-md relative mb-4;
+
+   > label {
+    @apply relative w-5 h-5 cursor-pointer border-2 border-gray-400 rounded-full
+    transition duration-75 hover:border-accent items-start self-start flex-shrink-0 mr-2;
+
+  .checkbox {
+    @apply appearance-none focus:outline-none;
+}
+  };
+
+  > span {
+    @apply select-none w-full
+  }
+}
+
+  .check {
+  @apply absolute inset-0 left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2  w-3 h-3 text-white/70 stroke-[5] opacity-0
+  }
