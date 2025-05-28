@@ -1,23 +1,22 @@
-import { useMyColumnsStore } from '@/entities/column/model/myColumns.store'
+import { useMyCardsStore } from '@/entities/card'
 import React, { useRef, useState } from 'react'
 
-export function AddColumnForm({
-	setIsToggle,
-	boardId
-}: {
+interface IProps {
 	setIsToggle: (arg: boolean) => void
-	boardId: string
-}) {
+	columnId: string
+}
+
+export function AddCardForm({ setIsToggle, columnId }: IProps) {
 	const [text, setText] = useState('')
 	const inputRef = useRef<HTMLInputElement | null>(null)
-	const addColumn = useMyColumnsStore(state => state.addColumn)
+	const addCard = useMyCardsStore(state => state.addCard)
 
 	function onSubmitHandler(e: React.FormEvent<HTMLFormElement>) {
 		e.preventDefault()
 		if (text.trim().length > 0) {
 			inputRef.current?.blur()
 			setIsToggle(false)
-			addColumn(text, boardId)
+			addCard(text, columnId)
 			setText('')
 		} else {
 			inputRef.current?.blur()

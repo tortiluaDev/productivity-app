@@ -1,0 +1,7 @@
+.list {
+  @apply flex flex-col gap-3 ml-3;
+
+  > li {
+    @apply flex gap-2 items-center bg-gray-800 px-3 py-2 rounded
+  }
+}

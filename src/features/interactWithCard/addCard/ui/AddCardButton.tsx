@@ -1,8 +1,8 @@
-import { AddColumnForm } from '@/features/addColumn/ui/AddColumnForm'
+import { AddCardForm } from '@/features/interactWithCard/addCard/ui/AddCardForm'
 import { AddButton } from '@/shared/ui'
 import { useState } from 'react'
 
-export function AddColumnButton({ boardId }: { boardId: string }) {
+export function AddCardButton({ columnId }: { columnId: string }) {
 	const [isToggle, setIsToggle] = useState(false)
 	const handleClick = () => {
 		setIsToggle(true)
@@ -11,17 +11,17 @@ export function AddColumnButton({ boardId }: { boardId: string }) {
 	if (!isToggle)
 		return (
 			<AddButton
-				text='Add column'
+				text='Add card'
 				onClick={handleClick}
-				className='rounded bg-dark bg-opacity-60'
+				className='w-full'
 			/>
 		)
 
 	if (isToggle)
 		return (
-			<AddColumnForm
+			<AddCardForm
 				setIsToggle={setIsToggle}
-				boardId={boardId}
+				columnId={columnId}
 			/>
 		)
 }

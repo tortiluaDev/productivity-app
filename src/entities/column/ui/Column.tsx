@@ -1,21 +1,33 @@
-import { Card } from '@/entities/card'
+import { Card, useMyCardsStore } from '@/entities/card'
 import { useMyColumnsStore } from '@/entities/column/model/myColumns.store'
-import { AddButton } from '@/shared/ui'
 import { Trash2 } from 'lucide-react'
-import React, { useRef, useState } from 'react'
+import React, { ReactNode, useRef, useState } from 'react'
 
-export function Column({ name, id }: { name: string; id: string }) {
+interface IProps {
+	name: string
+	id: string
+	children: ReactNode
+}
+
+export function Column({ name, id, children }: IProps) {
 	const [text, setText] = useState(name)
 	const inputRef = useRef<HTMLInputElement | null>(null)
 	const deleteColumn = useMyColumnsStore(state => state.deleteColumn)
+	const renameColumn = useMyColumnsStore(state => state.renameColumn)
+	const deleteCard = useMyCardsStore(state => state.deleteCard)
+	const cards = useMyCardsStore(state => state.cards)
 
 	function onSubmitHandler(e: React.FormEvent<HTMLFormElement>) {
 		e.preventDefault()
+		renameColumn(id, text)
 		inputRef.current?.blur()
 	}
 
 	function onDeleteHandler(columnId: string) {
 		deleteColumn(columnId)
+		cards.forEach(card => {
+			if (card.columnId === columnId) deleteCard(card.id)
+		})
 	}
 
 	return (
@@ -28,7 +40,7 @@ export function Column({ name, id }: { name: string; id: string }) {
 					<input
 						value={text}
 						onChange={e => setText(e.target.value)}
-						className='bg-transparent px-3 py-2 border border-transparent focus:border-accent transition duration-150 outline-none w-full h-auto'
+						className='bg-transparent text-lg font-bold px-3 py-2 border border-transparent focus:border-accent transition duration-150 outline-none w-full h-auto'
 						ref={inputRef}
 					/>
 				</form>
@@ -43,11 +55,16 @@ export function Column({ name, id }: { name: string; id: string }) {
 				</button>
 			</div>
 			<hr className='mb-4 border border-dark rounded border-opacity-40' />
-			<Card />
-			<AddButton
-				text='Add card'
-				className='w-full'
-			/>
+			{cards.map(card => {
+				if (card.columnId === id)
+					return (
+						<Card
+							key={card.id}
+							card={card}
+						/>
+					)
+			})}
+			{children}
 		</div>
 	)
 }

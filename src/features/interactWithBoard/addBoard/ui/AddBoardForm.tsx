@@ -1,6 +1,6 @@
 import styles from './createBoardForm.module.scss'
-import { IProps } from '@/features/addBoard/model/AddBoardForm.types'
-import { ImagePicker } from '@/features/addBoard/ui/ImagePicker'
+import { IProps } from '@/features/interactWithBoard/addBoard/model/AddBoardForm.types'
+import { ImagePicker } from '@/features/interactWithBoard/addBoard/ui/ImagePicker'
 import type { TImage } from '@/shared/api'
 import { ShowMoreAndHideButton } from '@/shared/ui'
 import { ImageWithSkeleton } from '@/shared/ui/skeletons/ImageWithSkeleton'

@@ -2,8 +2,8 @@
 
 import styles from './BoardsList.module.scss'
 import { Board, useMyBoardsStore } from '@/entities/board'
-import { AddBoardButtonContainer } from '@/features/addBoard'
-import { ClearBoardsButton } from '@/features/clearBoards'
+import { AddBoardButtonContainer } from 'src/features/interactWithBoard/addBoard'
+import { ClearBoardsButton } from 'src/features/interactWithBoard/clearBoards'
 
 export function BoardsList() {
 	const boards = useMyBoardsStore(state => state.boards)
@@ -22,6 +22,7 @@ export function BoardsList() {
 						slug={board.slug}
 						img={board.images.img}
 						blurImg={board.images.blurImg}
+						id={board.id}
 					/>
 				))}
 				<AddBoardButtonContainer />

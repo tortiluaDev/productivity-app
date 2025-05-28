@@ -10,7 +10,19 @@ export const useMyColumnsStore = create<IStore>()(
 			addColumn: (name, boardId) =>
 				set(state => ({ columns: [...state.columns, { id: uuid(), name, boardId }] })),
 			deleteColumn: id =>
-				set(state => ({ columns: state.columns.filter(column => column.id !== id) }))
+				set(state => ({ columns: state.columns.filter(column => column.id !== id) })),
+			renameColumn: (id, newName) =>
+				set(state => ({
+					columns: state.columns.map(column => {
+						if (column.id === id)
+							return {
+								...column,
+								name: newName
+							}
+						else return column
+					})
+				})),
+			removeColumns: () => set(() => ({ columns: [] }))
 		}),
 		{
 			name: 'columns-store'

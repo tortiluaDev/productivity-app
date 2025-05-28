@@ -1,0 +1,15 @@
+export interface IStore {
+	cards: ICard[]
+	addCard: (name: string, columnId: string) => void
+	deleteCard: (id: string) => void
+	editCard: (id: string, newText: string) => void
+	toggleCheckbox: (id: string) => void
+	removeCards: () => void
+}
+
+export interface ICard {
+	id: string
+	text: string
+	isComplete: boolean
+	columnId: string
+}

@@ -8,10 +8,6 @@ export interface IStore {
 	columns: IColumn[]
 	addColumn: (name: string, boardId: string) => void
 	deleteColumn: (id: string) => void
-}
-
-interface ICard {
-	id: string
-	text: string
-	isComplete: boolean
+	renameColumn: (id: string, newName: string) => void
+	removeColumns: () => void
 }

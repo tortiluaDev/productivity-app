@@ -1,6 +1,6 @@
 import { useMyBoardsStore } from '@/entities/board'
-import { AddBoardButton } from '@/features/addBoard/ui/AddBoardButton'
-import { AddBoardForm } from '@/features/addBoard/ui/AddBoardForm'
+import { AddBoardButton } from '@/features/interactWithBoard/addBoard/ui/AddBoardButton'
+import { AddBoardForm } from '@/features/interactWithBoard/addBoard/ui/AddBoardForm'
 import type { TImage } from '@/shared/api'
 import { imagesService } from '@/shared/api'
 import { useQuery } from '@tanstack/react-query'

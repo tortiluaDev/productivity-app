@@ -1,8 +1,9 @@
 import { IBoard } from '@/entities/board'
 import { Column, IColumn } from '@/entities/column'
-import { AddColumnButton } from '@/features/addColumn'
 import { TopPanel } from '@/widgets/board'
 import { Ref } from 'react'
+import { AddCardButton } from 'src/features/interactWithCard/addCard'
+import { AddColumnButton } from 'src/features/interactWithColumn/addColumn'
 
 interface IProps {
 	board: IBoard
@@ -14,9 +15,9 @@ export function KanbanBoard({ board, columns, scrollRef }: IProps) {
 	return (
 		<div
 			style={{
-				backgroundImage: `url(${board.images?.enhancedImg ? board.images.enhancedImg : board.images?.img})`
+				backgroundImage: `url(${board.images.img}`
 			}}
-			className='relative min-h-screen bg-cover bg-center text-white'
+			className='bg-blue-300 relative min-h-screen bg-cover bg-center text-white'
 		>
 			<div className='absolute inset-0 bg-black/40' />
 			<TopPanel boardName={board.name} />
@@ -32,7 +33,9 @@ export function KanbanBoard({ board, columns, scrollRef }: IProps) {
 									name={column.name}
 									id={column.id}
 									key={column.id}
-								/>
+								>
+									<AddCardButton columnId={column.id} />
+								</Column>
 							)
 					})}
 					<AddColumnButton boardId={board.id} />
