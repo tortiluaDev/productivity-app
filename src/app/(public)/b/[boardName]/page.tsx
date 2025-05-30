@@ -1,6 +1,7 @@
 'use client'
 
 import { IBoard, useMyBoardsStore } from '@/entities/board'
+import { EditCard } from '@/features/interactWithCard/editCard'
 import { KanbanBoardContainer } from '@/widgets/board'
 import { useRouter } from 'next/navigation'
 import { useEffect } from 'react'
@@ -22,7 +23,11 @@ function BoardPage({ params }: IProps) {
 
 	if (boards.length === 0) return <p>Loading...</p>
 
-	return <KanbanBoardContainer board={board as IBoard} />
+	return (
+		<EditCard>
+			<KanbanBoardContainer board={board as IBoard} />
+		</EditCard>
+	)
 }
 
 export default BoardPage

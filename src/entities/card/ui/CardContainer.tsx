@@ -1,19 +1,22 @@
-import { EditCardModal, ICard } from '@/entities/card'
+import { ICard } from '@/entities/card'
+import { CardDeleteSlotProvider } from '@/entities/card/model/context/CardDeleteSlotContext'
+import { CardEditSlotProvider } from '@/entities/card/model/context/CardEditSlotContext'
 import { DefaultCard } from '@/entities/card/ui/variables/DefaultCard'
 import { HoverCard } from '@/entities/card/ui/variables/HoverCard'
-import { useIsEditCard } from '@/features/interactWithCard/editCard'
+import { DeleteCardButton } from '@/features/interactWithCard/deleteCard'
+import { EditCardButton } from '@/features/interactWithCard/editCard'
 import { Checkbox } from '@/features/interactWithCard/setCompleteCard/ui/Checkbox'
+import { ArchiveX } from 'lucide-react'
 import { useRef, useState } from 'react'
 
 export function Card({ card }: { card: ICard }) {
 	const [hovered, setHovered] = useState(false)
 	const hoverTimeout = useRef<ReturnType<typeof setTimeout> | null>(null)
-	const { isEdit, toggleIsEdit } = useIsEditCard()
 
 	const handleMouseEnter = () => {
 		hoverTimeout.current = setTimeout(() => {
 			setHovered(true)
-		}, 50)
+		}, 100)
 	}
 
 	const handleMouseLeave = () => {
@@ -24,21 +27,33 @@ export function Card({ card }: { card: ICard }) {
 		setHovered(false)
 	}
 
-	if (isEdit) return <EditCardModal setIsEdit={toggleIsEdit} />
-
-	return hovered ? (
-		<HoverCard
-			handleMouseLeave={handleMouseLeave}
-			card={card}
-		/>
-	) : (
-		<DefaultCard
-			handleMouseEnter={handleMouseEnter}
-			handleMouseLeave={handleMouseLeave}
-			text={card.text}
-			isComplete={card.isComplete}
+	return (
+		<CardDeleteSlotProvider
+			value={{
+				deleteSlot: (
+					<DeleteCardButton id={card.id}>
+						<ArchiveX size={16} />
+					</DeleteCardButton>
+				)
+			}}
 		>
-			<Checkbox card={card} />
-		</DefaultCard>
+			<CardEditSlotProvider value={{ editSlot: <EditCardButton id={card.id} /> }}>
+				{hovered ? (
+					<HoverCard
+						handleMouseLeave={handleMouseLeave}
+						card={card}
+					/>
+				) : (
+					<DefaultCard
+						handleMouseEnter={handleMouseEnter}
+						handleMouseLeave={handleMouseLeave}
+						text={card.text}
+						isComplete={card.isComplete}
+					>
+						<Checkbox card={card} />
+					</DefaultCard>
+				)}
+			</CardEditSlotProvider>
+		</CardDeleteSlotProvider>
 	)
 }

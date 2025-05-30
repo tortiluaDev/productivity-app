@@ -1,7 +1,7 @@
 import styles from '../Card.module.scss'
 import { ICard } from '@/entities/card'
-import { DeleteCardButton } from '@/features/interactWithCard/deleteCard'
-import { EditCardButton } from '@/features/interactWithCard/editCard'
+import { useCardDeleteSlot } from '@/entities/card/model/context/CardDeleteSlotContext'
+import { useCardEditSlot } from '@/entities/card/model/context/CardEditSlotContext'
 import { Checkbox } from '@/features/interactWithCard/setCompleteCard/ui'
 
 interface IProps {
@@ -10,7 +10,9 @@ interface IProps {
 }
 
 export function HoverCard({ handleMouseLeave, card }: IProps) {
-	// УБРАТЬ ДВЕ КНОПКИ ОТСЮДА (ФИЧИ) И ПОМЕСТИТЬ ИХ СЮДА НА ПАРУ УРОВНЕЙ ВЫШЕ ЧЕРЕЗ СЛОТЫ
+	const { deleteSlot } = useCardDeleteSlot()
+	const { editSlot } = useCardEditSlot()
+
 	return (
 		<div
 			className={styles.card}
@@ -19,8 +21,8 @@ export function HoverCard({ handleMouseLeave, card }: IProps) {
 			<Checkbox card={card} />
 			<span>{card.text}</span>
 			<div className={styles.iconsWrapper}>
-				{card.isComplete && <DeleteCardButton id={card.id} />}
-				<EditCardButton />
+				{card.isComplete && deleteSlot}
+				{editSlot}
 			</div>
 		</div>
 	)

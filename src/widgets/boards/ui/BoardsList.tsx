@@ -2,6 +2,8 @@
 
 import styles from './BoardsList.module.scss'
 import { Board, useMyBoardsStore } from '@/entities/board'
+import { DeleteBoardButton } from '@/features/interactWithBoard/deleteBoard'
+import { Trash2 } from 'lucide-react'
 import { AddBoardButtonContainer } from 'src/features/interactWithBoard/addBoard'
 import { ClearBoardsButton } from 'src/features/interactWithBoard/clearBoards'
 
@@ -23,6 +25,11 @@ export function BoardsList() {
 						img={board.images.img}
 						blurImg={board.images.blurImg}
 						id={board.id}
+						deleteSlot={
+							<DeleteBoardButton boardId={board.id}>
+								<Trash2 size={18} />
+							</DeleteBoardButton>
+						}
 					/>
 				))}
 				<AddBoardButtonContainer />

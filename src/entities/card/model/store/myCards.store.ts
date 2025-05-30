@@ -1,4 +1,4 @@
-import { IStore } from '@/entities/card/model/myCards.store.types'
+import { IStore } from '@/entities/card/model/store/myCards.store.types'
 import { v4 as uuid } from 'uuid'
 import { persist } from 'zustand/middleware'
 import { create } from 'zustand/react'

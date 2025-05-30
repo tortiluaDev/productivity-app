@@ -1,17 +1,12 @@
 import { useMyBoardsStore } from '@/entities/board'
-import { useMyCardsStore } from '@/entities/card'
-import { useMyColumnsStore } from '@/entities/column/model/myColumns.store'
+import { useDeleteBoardsWithChildren } from '@/features/interactWithBoard/clearBoards/model/useDeleteBoardsWithChildren'
 
 export function ClearBoardsButton() {
-	const clearBoards = useMyBoardsStore(state => state.clearBoards)
-	const clearColumns = useMyColumnsStore(state => state.removeColumns)
-	const clearCards = useMyCardsStore(state => state.removeCards)
+	const deleteBoardsWithChildren = useDeleteBoardsWithChildren()
 	const boards = useMyBoardsStore(state => state.boards)
 
 	const handleDeleteAll = () => {
-		clearBoards()
-		clearColumns()
-		clearCards()
+		deleteBoardsWithChildren()
 	}
 
 	return (
