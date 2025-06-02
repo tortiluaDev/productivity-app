@@ -3,19 +3,21 @@ import { ICard } from '@/entities/card'
 import { useCardDeleteSlot } from '@/entities/card/model/context/CardDeleteSlotContext'
 import { useCardEditSlot } from '@/entities/card/model/context/CardEditSlotContext'
 import { Checkbox } from '@/features/interactWithCard/setCompleteCard/ui'
+import clsx from 'clsx'
 
 interface IProps {
 	handleMouseLeave: () => void
 	card: ICard
+	className: string
 }
 
-export function HoverCard({ handleMouseLeave, card }: IProps) {
+export function HoverCard({ handleMouseLeave, card, className }: IProps) {
 	const { deleteSlot } = useCardDeleteSlot()
 	const { editSlot } = useCardEditSlot()
 
 	return (
 		<div
-			className={styles.card}
+			className={clsx(styles.card, className)}
 			onMouseLeave={handleMouseLeave}
 		>
 			<Checkbox card={card} />

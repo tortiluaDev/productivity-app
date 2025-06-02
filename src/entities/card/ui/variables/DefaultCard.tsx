@@ -1,4 +1,5 @@
 import styles from '../Card.module.scss'
+import clsx from 'clsx'
 import { ReactNode } from 'react'
 
 interface IProps {
@@ -7,6 +8,7 @@ interface IProps {
 	text: string
 	isComplete: boolean
 	children: ReactNode
+	className: string
 }
 
 export function DefaultCard({
@@ -14,11 +16,12 @@ export function DefaultCard({
 	handleMouseLeave,
 	text,
 	isComplete,
-	children
+	children,
+	className
 }: IProps) {
 	return (
 		<div
-			className={styles.cardDefault}
+			className={clsx(styles.cardDefault, className)}
 			onMouseEnter={handleMouseEnter}
 			onMouseLeave={handleMouseLeave}
 		>

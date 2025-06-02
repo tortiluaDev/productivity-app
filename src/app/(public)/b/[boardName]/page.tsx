@@ -2,20 +2,16 @@
 
 import { IBoard, useMyBoardsStore } from '@/entities/board'
 import { EditCard } from '@/features/interactWithCard/editCard'
+import { TimerProvider } from '@/features/pomodoroTimer'
 import { KanbanBoardContainer } from '@/widgets/board'
-import { useRouter } from 'next/navigation'
-import { useEffect } from 'react'
+import { useParams, useRouter } from 'next/navigation'
+import React, { useEffect } from 'react'
 
-interface IProps {
-	params: {
-		boardName: string
-	}
-}
-
-function BoardPage({ params }: IProps) {
+function BoardPage() {
 	const router = useRouter()
+	const { boardName } = useParams<{ boardName: string }>()
 	const boards = useMyBoardsStore(state => state.boards)
-	const board = boards.find(board => board.slug === params.boardName)
+	const board = boards.find(board => board.slug === boardName)
 
 	useEffect(() => {
 		if (boards.length > 0 && !board) router.replace('/')
@@ -25,7 +21,9 @@ function BoardPage({ params }: IProps) {
 
 	return (
 		<EditCard>
-			<KanbanBoardContainer board={board as IBoard} />
+			<TimerProvider>
+				<KanbanBoardContainer board={board as IBoard} />
+			</TimerProvider>
 		</EditCard>
 	)
 }

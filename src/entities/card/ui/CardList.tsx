@@ -1,8 +1,10 @@
 import { Card, useMyCardsStore } from '@/entities/card'
 import { EditCardModal, useEditCard } from '@/features/interactWithCard/editCard'
+import { useMyTimersStore } from '@/features/pomodoroTimer'
 
 export function CardList({ columnId }: { columnId: string }) {
 	const cards = useMyCardsStore(state => state.cards)
+	const activeTimerCardId = useMyTimersStore(state => state.activeTimerCardId)
 	const { editCardId, setEditCardId } = useEditCard()
 
 	return (
@@ -10,10 +12,10 @@ export function CardList({ columnId }: { columnId: string }) {
 			{cards.map(card => {
 				if (card.columnId === columnId)
 					return (
-						<>
+						<div key={card.id}>
 							<Card
 								card={card}
-								key={card.id}
+								className={activeTimerCardId === card.id ? 'animate-pulse' : ''}
 							/>
 							{editCardId === card.id && (
 								<EditCardModal
@@ -22,7 +24,7 @@ export function CardList({ columnId }: { columnId: string }) {
 									id={card.id}
 								/>
 							)}
-						</>
+						</div>
 					)
 			})}
 		</>

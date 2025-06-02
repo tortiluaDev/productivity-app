@@ -9,7 +9,7 @@ import { Checkbox } from '@/features/interactWithCard/setCompleteCard/ui/Checkbo
 import { ArchiveX } from 'lucide-react'
 import { useRef, useState } from 'react'
 
-export function Card({ card }: { card: ICard }) {
+export function Card({ card, className }: { card: ICard; className: string }) {
 	const [hovered, setHovered] = useState(false)
 	const hoverTimeout = useRef<ReturnType<typeof setTimeout> | null>(null)
 
@@ -42,6 +42,7 @@ export function Card({ card }: { card: ICard }) {
 					<HoverCard
 						handleMouseLeave={handleMouseLeave}
 						card={card}
+						className={className}
 					/>
 				) : (
 					<DefaultCard
@@ -49,6 +50,7 @@ export function Card({ card }: { card: ICard }) {
 						handleMouseLeave={handleMouseLeave}
 						text={card.text}
 						isComplete={card.isComplete}
+						className={className}
 					>
 						<Checkbox card={card} />
 					</DefaultCard>

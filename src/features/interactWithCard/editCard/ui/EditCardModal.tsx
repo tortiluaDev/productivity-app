@@ -1,8 +1,9 @@
 import styles from './EditCardModal.module.scss'
 import { useMyCardsStore } from '@/entities/card'
 import { useEditCard } from '@/features/interactWithCard/editCard'
-import { DeleteButton } from '@/shared/ui'
-import { ArchiveX, CalendarDays, Timer } from 'lucide-react'
+import { TimerModal, useMyTimersStore } from '@/features/pomodoroTimer'
+import { Button, DeleteButton } from '@/shared/ui'
+import { ArchiveX, Timer } from 'lucide-react'
 import { FormEvent, useState } from 'react'
 
 interface IProps {
@@ -13,8 +14,10 @@ interface IProps {
 
 export function EditCardModal({ setIsEdit, text, id }: IProps) {
 	const [inputText, setInputText] = useState<string>(text)
+	const [isTimerOpened, setIsTimerOpened] = useState(false)
 	const editCard = useMyCardsStore(state => state.editCard)
 	const deleteCard = useMyCardsStore(state => state.deleteCard)
+	const removeTimer = useMyTimersStore(state => state.removeTimer)
 	const { setEditCardId } = useEditCard()
 
 	const onSubmitHandler = (e: FormEvent<HTMLFormElement>) => {
@@ -24,8 +27,13 @@ export function EditCardModal({ setIsEdit, text, id }: IProps) {
 		setInputText('')
 	}
 
+	const handlePomodoroClick = () => {
+		setIsTimerOpened(true)
+	}
+
 	return (
 		<div className='absolute -translate-y-1/2 z-[999] grid grid-cols-2'>
+			{isTimerOpened && <TimerModal id={id} />}
 			<form
 				className='flex flex-col gap-3'
 				onSubmit={onSubmitHandler}
@@ -44,13 +52,22 @@ export function EditCardModal({ setIsEdit, text, id }: IProps) {
 				</button>
 			</form>
 			<ul className={styles.list}>
+				{/*пока скип*/}
+				{/*<li>*/}
+				{/*	<CalendarDays size={16} />*/}
+				{/*	Set dates*/}
+				{/*</li>*/}
 				<li>
-					<CalendarDays size={16} />
-					Set dates
-				</li>
-				<li>
-					<Timer size={16} />
-					Set pomodoro-timer
+					<Button
+						text='Set pomodoro-timer'
+						className='group w-full h-full px-3 py-2'
+						onClick={() => handlePomodoroClick()}
+					>
+						<Timer
+							size={16}
+							className='group-hover:text-accent transition duration-[20ms]'
+						/>
+					</Button>
 				</li>
 				<li>
 					<DeleteButton
@@ -58,6 +75,7 @@ export function EditCardModal({ setIsEdit, text, id }: IProps) {
 						className='group w-full h-full px-3 py-2'
 						onClick={() => {
 							deleteCard(id)
+							removeTimer(id)
 							setEditCardId(null)
 						}}
 					>

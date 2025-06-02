@@ -3,9 +3,12 @@ import { Column, IColumn } from '@/entities/column'
 import { useEditCard } from '@/features/interactWithCard/editCard'
 import { DeleteColumnButton } from '@/features/interactWithColumn/deleteColumn'
 import { RenameColumnForm } from '@/features/interactWithColumn/renameColumn'
+import { useMyTimersStore } from '@/features/pomodoroTimer'
+import { playNotification } from '@/shared/utils'
 import { TopPanel } from '@/widgets/board'
 import { Trash2 } from 'lucide-react'
-import { Ref } from 'react'
+import { Ref, useEffect } from 'react'
+import { toast } from 'react-toastify'
 import { AddCardButton } from 'src/features/interactWithCard/addCard'
 import { AddColumnButton } from 'src/features/interactWithColumn/addColumn'
 
@@ -17,13 +20,28 @@ interface IProps {
 
 export function KanbanBoard({ board, columns, scrollRef }: IProps) {
 	const { editCardId, setEditCardId } = useEditCard()
+	const workNotify = () => toast.info('Time to work')
+	const breakNotify = () => toast.info('Time to break')
+	const timers = useMyTimersStore(state => state.timers)
+	const activeTimerCardId = useMyTimersStore(state => state.activeTimerCardId)
+	const activeTimer = timers[activeTimerCardId ? activeTimerCardId : '']
+
+	useEffect(() => {
+		if (activeTimer?.currentMode === 'work') {
+			workNotify()
+			playNotification()
+		} else if (activeTimer?.currentMode === 'break') {
+			breakNotify()
+			playNotification()
+		}
+	}, [activeTimer?.currentMode])
 
 	return (
 		<div
 			style={{
 				backgroundImage: `url(${board.images.img}`
 			}}
-			className='bg-blue-300 relative min-h-screen bg-cover bg-center text-white'
+			className='bg-blue-300 relative h-screen bg-cover bg-center text-white'
 		>
 			{editCardId && (
 				<div
@@ -35,7 +53,7 @@ export function KanbanBoard({ board, columns, scrollRef }: IProps) {
 			<TopPanel boardName={board.name} />
 			<div
 				ref={scrollRef}
-				className='relative h-screen overflow-x-auto cursor-grab active:cursor-grabbing'
+				className='relative h-screen pt-28 overflow-x-auto cursor-grab active:cursor-grabbing'
 			>
 				<div className='p-12 flex gap-5 items-start min-w-max'>
 					{columns.map(column => {
