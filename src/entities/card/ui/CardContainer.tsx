@@ -8,6 +8,7 @@ import { EditCardButton } from '@/features/interactWithCard/editCard'
 import { Checkbox } from '@/features/interactWithCard/setCompleteCard/ui/Checkbox'
 import { useSortable } from '@dnd-kit/sortable'
 import { CSS } from '@dnd-kit/utilities'
+import { AnimatePresence, motion } from 'framer-motion'
 import { ArchiveX } from 'lucide-react'
 import { useRef, useState } from 'react'
 
@@ -56,23 +57,41 @@ export function Card({ card, className }: { card: ICard; className: string }) {
 					{...attributes}
 					{...listeners}
 				>
-					{hovered ? (
-						<HoverCard
-							handleMouseLeave={handleMouseLeave}
-							card={card}
-							className={className}
-						/>
-					) : (
-						<DefaultCard
-							handleMouseEnter={handleMouseEnter}
-							handleMouseLeave={handleMouseLeave}
-							text={card.text}
-							isComplete={card.isComplete}
-							className={className}
-						>
-							<Checkbox card={card} />
-						</DefaultCard>
-					)}
+					<AnimatePresence mode='wait'>
+						{hovered ? (
+							<motion.div
+								key='hover'
+								initial={{ opacity: 0, x: 10 }}
+								animate={{ opacity: 1, x: 0 }}
+								exit={{ opacity: 0, x: -10 }}
+								transition={{ duration: 0.15 }}
+							>
+								<HoverCard
+									handleMouseLeave={handleMouseLeave}
+									card={card}
+									className={className}
+								/>
+							</motion.div>
+						) : (
+							<motion.div
+								key='default'
+								initial={{ opacity: 0, x: -10 }}
+								animate={{ opacity: 1, x: 0 }}
+								exit={{ opacity: 0, x: 10 }}
+								transition={{ duration: 0.15 }}
+							>
+								<DefaultCard
+									handleMouseEnter={handleMouseEnter}
+									handleMouseLeave={handleMouseLeave}
+									text={card.text}
+									isComplete={card.isComplete}
+									className={className}
+								>
+									<Checkbox card={card} />
+								</DefaultCard>
+							</motion.div>
+						)}
+					</AnimatePresence>
 				</div>
 			</CardEditSlotProvider>
 		</CardDeleteSlotProvider>
