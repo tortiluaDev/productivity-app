@@ -10,4 +10,5 @@ export interface IStore {
 	deleteColumn: (id: string) => void
 	renameColumn: (id: string, newName: string) => void
 	removeColumns: () => void
+	reorderColumns: (boardId: string, oldIndex: number, newIndex: number) => void
 }

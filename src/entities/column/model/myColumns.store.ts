@@ -1,4 +1,5 @@
 import { IStore } from '@/entities/column/model/myColumns.store.types'
+import { arrayMove } from '@dnd-kit/sortable'
 import { v4 as uuid } from 'uuid'
 import { persist } from 'zustand/middleware'
 import { create } from 'zustand/react'
@@ -22,7 +23,15 @@ export const useMyColumnsStore = create<IStore>()(
 						else return column
 					})
 				})),
-			removeColumns: () => set(() => ({ columns: [] }))
+			removeColumns: () => set(() => ({ columns: [] })),
+			reorderColumns: (boardId, oldIndex, newIndex) =>
+				set(state => {
+					const boardColumns = state.columns.filter(col => col.boardId === boardId)
+					const moved = arrayMove(boardColumns, oldIndex, newIndex)
+
+					const untouched = state.columns.filter(col => col.boardId !== boardId)
+					return { columns: [...untouched, ...moved] }
+				})
 		}),
 		{
 			name: 'columns-store'

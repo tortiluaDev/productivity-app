@@ -5,6 +5,8 @@ export interface IStore {
 	editCard: (id: string, newText: string) => void
 	toggleCheckbox: (id: string) => void
 	removeCards: () => void
+	reorderCardsInColumn: (activeId: string, overId: string) => void
+	reorderCardsInBoard: (activeId: string, overId: string | null, toColId: string) => void
 }
 
 export interface ICard {

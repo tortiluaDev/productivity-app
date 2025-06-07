@@ -1,15 +1,12 @@
 import { IBoard } from '@/entities/board'
-import { Column, IColumn } from '@/entities/column'
+import { ColumnList, IColumn } from '@/entities/column'
 import { useEditCard } from '@/features/interactWithCard/editCard'
-import { DeleteColumnButton } from '@/features/interactWithColumn/deleteColumn'
-import { RenameColumnForm } from '@/features/interactWithColumn/renameColumn'
 import { useMyTimersStore } from '@/features/pomodoroTimer'
 import { playNotification } from '@/shared/utils'
 import { TopPanel } from '@/widgets/board'
-import { Trash2 } from 'lucide-react'
+import { SortableContext, horizontalListSortingStrategy } from '@dnd-kit/sortable'
 import { Ref, useEffect } from 'react'
 import { toast } from 'react-toastify'
-import { AddCardButton } from 'src/features/interactWithCard/addCard'
 import { AddColumnButton } from 'src/features/interactWithColumn/addColumn'
 
 interface IProps {
@@ -25,6 +22,7 @@ export function KanbanBoard({ board, columns, scrollRef }: IProps) {
 	const timers = useMyTimersStore(state => state.timers)
 	const activeTimerCardId = useMyTimersStore(state => state.activeTimerCardId)
 	const activeTimer = timers[activeTimerCardId ? activeTimerCardId : '']
+	const columnOrder = columns.map(col => col.id)
 
 	useEffect(() => {
 		if (activeTimer?.currentMode === 'work') {
@@ -56,27 +54,12 @@ export function KanbanBoard({ board, columns, scrollRef }: IProps) {
 				className='relative h-screen pt-28 overflow-x-auto cursor-grab active:cursor-grabbing'
 			>
 				<div className='p-12 flex gap-5 items-start min-w-max'>
-					{columns.map(column => {
-						if (column.boardId === board.id)
-							return (
-								<Column
-									id={column.id}
-									key={column.id}
-									AddSlot={<AddCardButton columnId={column.id} />}
-									RenameSlot={
-										<RenameColumnForm
-											id={column.id}
-											name={column.name}
-										/>
-									}
-									DeleteSlot={
-										<DeleteColumnButton id={column.id}>
-											<Trash2 size={18} />
-										</DeleteColumnButton>
-									}
-								/>
-							)
-					})}
+					<SortableContext
+						items={columnOrder}
+						strategy={horizontalListSortingStrategy}
+					>
+						<ColumnList columns={columns} />
+					</SortableContext>
 					<AddColumnButton boardId={board.id} />
 				</div>
 			</div>
