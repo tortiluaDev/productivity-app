@@ -1,0 +1,23 @@
+.wrapper {
+  @apply absolute min-w-[33%] pt-6 p-12 -translate-x-1/2 -translate-y-1/2 left-1/2 top-1/2 border-2 border-accent rounded-xl;
+
+  > h1 {
+    @apply text-2xl font-bold mb-5 text-center;
+  }
+
+  .imgWrapper {
+    @apply flex items-center gap-5;
+  }
+
+  .data {
+    @apply flex flex-col gap-4;
+
+    > p {
+      @apply text-xl;
+    }
+  }
+
+  .signOutBtn {
+    @apply bg-primary mt-9 w-full py-3 rounded-2xl hover:bg-accent transition duration-100;
+  }
+}

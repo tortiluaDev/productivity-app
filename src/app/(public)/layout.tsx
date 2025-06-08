@@ -1,4 +1,4 @@
-import Layout from '@/app/(public)/BaseLayout'
+import Layout from '@/app/BaseLayout'
 import type { PropsWithChildren } from 'react'
 
 function PublicLayout({ children }: PropsWithChildren) {
